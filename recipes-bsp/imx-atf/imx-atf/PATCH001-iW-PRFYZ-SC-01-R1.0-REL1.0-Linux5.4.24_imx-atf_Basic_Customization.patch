@@ -1,0 +1,57 @@
+diff -Naur A/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c B/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
+--- A/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c	2021-01-06 12:43:53.553432094 +0530
++++ B/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c	2021-01-06 12:45:03.554394395 +0530
+@@ -58,8 +58,15 @@
+ 	RDC_MDAn(RDC_MDA_M4, DID1),
+ 
+ 	/* peripherals domain permission */
++#ifdef CONFIG_IWG34M
++	/* IWG34M: UART4: Cortex A53 debug UART */
++	RDC_PDAPn(RDC_PDAP_UART4, D3R | D3W | D2R | D2W | D1R | D1W | D0R | D0W),
++	/* IWG34M: UART2: Cortex M4 debug UART */
++	RDC_PDAPn(RDC_PDAP_UART2, D3R | D3W | D2R | D2W | D1R | D1W | D0R | D0W),
++#else
+ 	RDC_PDAPn(RDC_PDAP_UART4, D1R | D1W),
+ 	RDC_PDAPn(RDC_PDAP_UART2, D0R | D0W),
++#endif
+ 
+ 	/* memory region */
+ 
+diff -Naur A/plat/imx/imx8m/imx8mm/include/platform_def.h B/plat/imx/imx8m/imx8mm/include/platform_def.h
+--- A/plat/imx/imx8m/imx8mm/include/platform_def.h	2021-01-06 12:43:53.553432094 +0530
++++ B/plat/imx/imx8m/imx8mm/include/platform_def.h	2021-01-06 12:45:03.562394505 +0530
+@@ -31,6 +31,9 @@
+ #define PLAT_WAIT_RET_STATE		U(1)
+ #define PLAT_STOP_OFF_STATE		U(3)
+ 
++/* IWG34M: Support For IWG34M Board */
++#define CONFIG_IWG34M
++
+ #define BL31_BASE			U(0x920000)
+ #define BL31_LIMIT			U(0x940000)
+ 
+@@ -51,7 +54,12 @@
+ 
+ #define HAB_RVT_BASE			U(0x00000900) /* HAB_RVT for i.MX8MM */
+ 
++#ifdef CONFIG_IWG34M
++/* IWG34M: UART4: Cortex A53 debug UART Base Address */
++#define IMX_BOOT_UART_BASE		U(0x30a60000)
++#else
+ #define IMX_BOOT_UART_BASE		U(0x30890000)
++#endif
+ #define IMX_BOOT_UART_CLK_IN_HZ		24000000 /* Select 24MHz oscillator */
+ 
+ #define PLAT_CRASH_UART_BASE		IMX_BOOT_UART_BASE
+diff -Naur A/plat/imx/imx8m/imx8mm/platform.mk B/plat/imx/imx8m/imx8mm/platform.mk
+--- A/plat/imx/imx8m/imx8mm/platform.mk	2021-01-06 12:43:53.553432094 +0530
++++ B/plat/imx/imx8m/imx8mm/platform.mk	2021-01-06 12:45:03.562394505 +0530
+@@ -57,7 +57,7 @@
+ ERRATA_A53_843419	:=	1
+ ERRATA_A53_855873	:=	1
+ 
+-BL32_BASE		?=	0xbe000000
++BL32_BASE		?=	0x7e000000
+ $(eval $(call add_define,BL32_BASE))
+ 
+ BL32_SIZE		?=	0x2000000

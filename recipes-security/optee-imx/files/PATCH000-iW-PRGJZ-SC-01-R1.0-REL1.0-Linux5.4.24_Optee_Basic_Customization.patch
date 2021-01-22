@@ -1,0 +1,43 @@
+diff -Naur A/core/arch/arm/plat-imx/conf.mk B/core/arch/arm/plat-imx/conf.mk
+--- A/core/arch/arm/plat-imx/conf.mk	2020-10-01 22:43:53.772984900 +0530
++++ B/core/arch/arm/plat-imx/conf.mk	2020-10-03 23:17:26.698494363 +0530
+@@ -65,7 +65,9 @@
+ 	mx8mmevk
+ 
+ mx8mn-flavorlist = \
+-	mx8mnevk
++	mx8mnevk \
++	mx8mn_iwg37m \
++	mx8mn_iwg37m_2gb \
+ 
+ mx8mp-flavorlist = \
+ 	mx8mpevk
+@@ -333,9 +335,14 @@
+ CFG_UART_BASE ?= UART2_BASE
+ endif
+ 
+-ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mnevk))
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mnevk mx8mn_iwg37m_2gb))
+ CFG_DDR_SIZE ?= 0x80000000
+-CFG_UART_BASE ?= UART2_BASE
++CFG_UART_BASE ?= UART4_BASE
++endif
++
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mn_iwg37m))
++CFG_DDR_SIZE ?= 0x40000000
++CFG_UART_BASE ?= UART4_BASE
+ endif
+ 
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mpevk))
+diff -Naur A/scripts/nxp_build.sh B/scripts/nxp_build.sh
+--- A/scripts/nxp_build.sh	2020-10-01 22:36:12.729882629 +0530
++++ B/scripts/nxp_build.sh	2020-10-03 23:14:59.609501389 +0530
+@@ -33,6 +33,8 @@
+ 	mx8mqevk \
+ 	mx8mmevk \
+ 	mx8mnevk \
++	mx8mn_iwg37m \
++	mx8mn_iwg37m_2gb \
+ 	mx8mpevk \
+ 	mx8qxpmek \
+ 	mx8qmmek \
