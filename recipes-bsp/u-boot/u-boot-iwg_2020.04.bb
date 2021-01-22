@@ -13,12 +13,13 @@ DEPENDS_append = " dtc-native"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://Licenses/gpl-2.0.txt;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-UBOOT_SRC ?= "git://source.codeaurora.org/external/imx/uboot-imx.git;protocol=https"
-SRCBRANCH = "imx_v2020.04_5.4.24_2.1.0"
+UBOOT_SRC ?= "https://github.com/iwave-git-imx8mm-8mn/uboot_iwg34m.git;protocol=https"
+SRCBRANCH = "imx8mm_8mn"
+UBOOT_SRC1 ?= "https://github.com/iwave-git-imx8mm-8mn/uboot_iwg37m.git;protocol=https"
 
-SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${UBOOT_SRC};branch=${SRCBRANCH} file://PATCH002-iW-PRFYZ-SC-01-R1.0-REL1.0-Linux5.4.24_Uboot_Basic_Customization.patch', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${UBOOT_SRC};branch=${SRCBRANCH} file://PATCH002-iW-PRGJZ-SC-01-R1.0-REL1.0-Linux5.4.24_Uboot_Basic_Customization.patch', '', d), d)}"
+SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${UBOOT_SRC};branch=${SRCBRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${UBOOT_SRC1};branch=${SRCBRANCH}', '', d), d)}"
 
-SRCREV = "4979a99482f7e04a3c1f4fb55e3182395ee8f710"
+SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', 'ff8f614f6a8ac950ce504afb6ed525330ab414ea', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '15d3e71e561232e7fabe488f3a6e5dda555598b8', '', d), d)}" 
 
 S = "${WORKDIR}/git"
 

@@ -11,13 +11,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 DEPENDS += "lzop-native bc-native"
 
-KERNEL_BRANCH ?= "imx_5.4.24_2.1.0"
+KERNEL_BRANCH ?= "imx8mm_8mn"
 LOCALVERSION = "-2.1.0"
-KERNEL_SRC ?= "git://source.codeaurora.org/external/imx/linux-imx.git;protocol=https"
+KERNEL_SRC ?= "https://github.com/iwave-git-imx8mm-8mn/kernel_iwg34m.git;protocol=https"
+KERNEL_SRC1 ?= "https://github.com/iwave-git-imx8mm-8mn/kernel_iwg37m.git;protocol=https"
 
-SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${KERNEL_SRC};branch=${KERNEL_BRANCH} file://PATCH004-iW-PRFYZ-SC-01-R1.0-REL1.0-Linux5.4.24_Kernel_Basic_Customization.patch', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${KERNEL_SRC};branch=${KERNEL_BRANCH} file://PATCH004-iW-PRGJZ-SC-01-R1.0-REL1.0-Linux5.4.24_Kernel_Basic_Customization.patch', '', d), d)}"
+SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${KERNEL_SRC};branch=${KERNEL_BRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${KERNEL_SRC1};branch=${KERNEL_BRANCH}', '', d), d)}"
 
-SRCREV = "babac008e5cf168abca1a85bda2e8071ca27a5c0"
+SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '62c0186302d2c4754e06722b3c38f6c4557b91f4', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '75f264b179bf8187e913d0f6b6f20ddebde21625', '', d), d)}"
 
 FILES_${KERNEL_PACKAGE_NAME}-base += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/modules.builtin.modinfo "
 
