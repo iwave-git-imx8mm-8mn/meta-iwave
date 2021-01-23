@@ -13,8 +13,8 @@ DEPENDS += "lzop-native bc-native"
 
 KERNEL_BRANCH ?= "imx8mm_8mn"
 LOCALVERSION = "-2.1.0"
-KERNEL_SRC ?= "https://github.com/iwave-git-imx8mm-8mn/kernel_iwg34m.git;protocol=https"
-KERNEL_SRC1 ?= "https://github.com/iwave-git-imx8mm-8mn/kernel_iwg37m.git;protocol=https"
+KERNEL_SRC ?= "git://github.com/iwave-git-imx8mm-8mn/kernel_iwg34m.git;protocol=https"
+KERNEL_SRC1 ?= "git://github.com/iwave-git-imx8mm-8mn/kernel_iwg37m.git;protocol=https"
 
 SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${KERNEL_SRC};branch=${KERNEL_BRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${KERNEL_SRC1};branch=${KERNEL_BRANCH}', '', d), d)}"
 

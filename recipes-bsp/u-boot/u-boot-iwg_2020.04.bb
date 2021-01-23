@@ -13,9 +13,9 @@ DEPENDS_append = " dtc-native"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://Licenses/gpl-2.0.txt;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-UBOOT_SRC ?= "https://github.com/iwave-git-imx8mm-8mn/uboot_iwg34m.git;protocol=https"
+UBOOT_SRC ?= "git://github.com/iwave-git-imx8mm-8mn/uboot_iwg34m.git;protocol=https"
 SRCBRANCH = "imx8mm_8mn"
-UBOOT_SRC1 ?= "https://github.com/iwave-git-imx8mm-8mn/uboot_iwg37m.git;protocol=https"
+UBOOT_SRC1 ?= "git://github.com/iwave-git-imx8mm-8mn/uboot_iwg37m.git;protocol=https"
 
 SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${UBOOT_SRC};branch=${SRCBRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${UBOOT_SRC1};branch=${SRCBRANCH}', '', d), d)}"
 
