@@ -19,7 +19,7 @@ UBOOT_SRC1 ?= "git://github.com/iwave-git-imx8mm-8mn/uboot_iwg37m.git;protocol=h
 
 SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${UBOOT_SRC};branch=${SRCBRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${UBOOT_SRC1};branch=${SRCBRANCH}', '', d), d)}"
 
-SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', 'ff8f614f6a8ac950ce504afb6ed525330ab414ea', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '15d3e71e561232e7fabe488f3a6e5dda555598b8', '', d), d)}" 
+SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '3f183999a306d40febf38700279fbc50687561d8', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', 'dc81ba9faaf25502c59f4d554180c04fb4c62d69', '', d), d)}" 
 
 S = "${WORKDIR}/git"
 
