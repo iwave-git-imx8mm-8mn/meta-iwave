@@ -18,7 +18,7 @@ KERNEL_SRC1 ?= "git://github.com/iwave-git-imx8mm-8mn/kernel_iwg37m.git;protocol
 
 SRC_URI = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '${KERNEL_SRC};branch=${KERNEL_BRANCH}', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '${KERNEL_SRC1};branch=${KERNEL_BRANCH}', '', d), d)}"
 
-SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '62c0186302d2c4754e06722b3c38f6c4557b91f4', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '75f264b179bf8187e913d0f6b6f20ddebde21625', '', d), d)}"
+SRCREV = "${@bb.utils.contains_any('MACHINE', 'imx8mm-iwg34m imx8mm-iwg34m-2gb', '62c0186302d2c4754e06722b3c38f6c4557b91f4', bb.utils.contains_any('MACHINE', 'imx8mn-iwg37m imx8mn-iwg37m-2gb', '53fa2b80287b96265d744654ec42d830629df2ec', '', d), d)}"
 
 FILES_${KERNEL_PACKAGE_NAME}-base += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/modules.builtin.modinfo "
 
